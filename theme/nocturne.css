@@ -1,0 +1,157 @@
+/*
+ * Nocturne for the Pterodactyl client panel.
+ *
+ * Colours, fonts and radii come from the rebuilt Tailwind palette; this file
+ * only adds what the palette can't express: the page glow, the accent focus
+ * ring, scrollbars, and the few places upstream hard-codes a light colour.
+ * Selectors stick to stable markup: ids, Tailwind utilities, element types,
+ * and styled-components display names (the readable "File__Component-" part
+ * of a class, which upstream's Babel setup keeps in production builds).
+ */
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background:
+        radial-gradient(1200px 600px at 0% 0%, color-mix(in oklab, var(--nocturne-accent) 7%, transparent), transparent 60%),
+        var(--nocturne-bg) !important;
+    background-attachment: fixed !important;
+    color: var(--nocturne-text);
+    letter-spacing: 0 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500 !important;
+    letter-spacing: -0.01em;
+}
+
+::selection {
+    background: color-mix(in srgb, var(--nocturne-accent) 30%, transparent);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--nocturne-accent) !important;
+    outline-offset: 2px;
+}
+
+/* Top bar: the accent reads as a line and a glow, never a flood. */
+#logo a {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+#logo a::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    vertical-align: -3px;
+    border: 1px solid var(--nocturne-accent);
+    border-radius: var(--nocturne-radius);
+    box-shadow: 0 0 16px color-mix(in oklab, var(--nocturne-accent) 35%, transparent);
+    background: no-repeat center / 12px
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='none' stroke='%23b5abfc' stroke-width='20' stroke-linejoin='round' d='M128 24 218 76v104l-90 52-90-52V76z'/%3E%3C/svg%3E");
+}
+
+.bg-neutral-900.shadow-md {
+    background: color-mix(in oklab, var(--nocturne-bg) 70%, #000) !important;
+    box-shadow: inset 0 -1px 0 var(--nocturne-divider) !important;
+}
+
+/* Server rows, cards and boxes get the hairline edge Nocturne uses for elevation. */
+[class*='ServerRow__StatusIndicatorBox-'],
+[class*='GreyRowBox-'] {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent);
+}
+
+[class*='ServerRow__StatusIndicatorBox-']:hover {
+    border-color: transparent !important;
+    box-shadow:
+        0 0 0 1px var(--nocturne-accent-700),
+        0 0 24px color-mix(in oklab, var(--nocturne-accent) 14%, transparent);
+}
+
+/* Inputs: themed surface, accent caret and focus edge. */
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+select,
+textarea {
+    caret-color: var(--nocturne-accent);
+}
+
+input:not([type='checkbox']):not([type='radio']):focus,
+select:focus,
+textarea:focus {
+    border-color: var(--nocturne-accent) !important;
+}
+
+input[type='checkbox'],
+input[type='radio'],
+input[type='range'] {
+    accent-color: var(--nocturne-accent);
+}
+
+/* Upstream's login card is hard-coded white; give it the surface instead. */
+[class*='LoginFormContainer___StyledDiv-'] {
+    background-color: var(--nocturne-surface) !important;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent), 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Its fields use upstream's "light" input and label variants; darken them. */
+[class*='LoginFormContainer___StyledDiv-'] label {
+    color: var(--nocturne-muted) !important;
+}
+
+[class*='LoginFormContainer___StyledDiv-'] input:not([type='checkbox']) {
+    background-color: var(--nocturne-raised) !important;
+    border-color: var(--nocturne-divider) !important;
+    color: var(--nocturne-text) !important;
+}
+
+[class*='LoginFormContainer___StyledDiv-'] input:not([type='checkbox']):focus {
+    border-color: var(--nocturne-accent) !important;
+}
+
+/* Console: match the terminal ground and give it a soft edge. */
+.xterm,
+.xterm .xterm-viewport {
+    background-color: transparent !important;
+}
+
+.xterm .xterm-rows {
+    font-feature-settings: 'calt' 0;
+}
+
+/* Code editor (file manager) picks up the deep ground. */
+.CodeMirror,
+.CodeMirror-gutters {
+    background: var(--nocturne-bg-deep) !important;
+}
+
+/* Scrollbars: upstream hard-codes slate greys. */
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow:
+        inset 0 0 0 1px var(--nocturne-muted),
+        inset 0 0 0 4px var(--nocturne-raised) !important;
+}
+
+* {
+    scrollbar-color: var(--nocturne-raised) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

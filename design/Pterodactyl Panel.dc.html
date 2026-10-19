@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-669e46b2-55bb-4d75-854b-d5725cbfbd96/styles.css">
+<script src="_ds/nocturne-669e46b2-55bb-4d75-854b-d5725cbfbd96/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+body{margin:0;background:#161826;color:#e9e9ed;font-family:"Inter",system-ui,sans-serif}
+a{color:var(--color-accent-300)}a:hover{color:var(--color-accent-200)}
+input[type=range]{accent-color:var(--color-accent);width:100%}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</helmet>
+<div data-screen-label="Panel" style="{{ rootStyle }}">
+<div style="display:flex;min-height:100vh;background:radial-gradient(1200px 600px at 0% 0%, color-mix(in oklab, var(--color-accent) 7%, transparent), transparent 60%), var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+
+<aside style="width:228px;flex:none;display:flex;flex-direction:column;gap:22px;padding:20px 14px;border-right:1px solid var(--color-divider);background:color-mix(in oklab, var(--color-bg) 70%, #000)">
+  <div style="display:flex;align-items:center;gap:10px;padding:0 8px">
+    <div style="width:28px;height:28px;border-radius:var(--radius-md);border:1px solid var(--color-accent);display:grid;place-items:center;color:var(--color-accent);box-shadow:0 0 16px color-mix(in oklab, var(--color-accent) 35%, transparent)"><i class="ph ph-hexagon" style="font-size:16px"></i></div>
+    <div style="display:flex;flex-direction:column">
+      <span style="font-size:14px;font-weight:500">Pterodactyl</span>
+      <span style="font-size:11px;color:var(--color-neutral-400)">node-01 · v1.11.7</span>
+    </div>
+  </div>
+  <nav style="display:flex;flex-direction:column;gap:2px">
+    <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500);padding:0 10px 6px">Panel</span>
+    <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+      <button onClick="{{ item.go }}" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-md);font-size:13px;color:{{ item.fg }};background:{{ item.bg }};box-shadow:{{ item.ring }};transition:background .18s" style-hover="background:color-mix(in srgb, var(--color-text) 6%, transparent)">
+        <i class="{{ item.icon }}" style="font-size:17px"></i>
+        <span style="flex:1">{{ item.label }}</span>
+        <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-500)">{{ item.meta }}</span>
+      </button>
+    </sc-for>
+  </nav>
+  <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--radius-md);background:var(--color-surface);box-shadow:var(--shadow-sm)">
+    <div style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-800);color:var(--color-accent-100);display:grid;place-items:center;font-size:12px">AK</div>
+    <div style="display:flex;flex-direction:column;min-width:0">
+      <span style="font-size:13px">akira</span>
+      <span style="font-size:11px;color:var(--color-neutral-400)">Root admin</span>
+    </div>
+  </div>
+</aside>
+
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+  <header style="display:flex;align-items:center;gap:14px;padding:14px 28px;border-bottom:1px solid var(--color-divider)">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-neutral-400)">
+      <span>Panel</span><i class="ph ph-caret-right" style="font-size:11px"></i><span style="color:var(--color-text)">{{ title }}</span>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px;padding:0 10px;height:32px;border:1px solid var(--color-divider);border-radius:var(--radius-md);color:var(--color-neutral-400);font-size:12px;min-width:200px"><i class="ph ph-magnifying-glass"></i><span style="flex:1">Search servers…</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:1px 5px;border:1px solid var(--color-divider);border-radius:4px">⌘K</span></div>
+      <button class="btn btn-secondary btn-icon" aria-label="Notifications"><i class="ph ph-bell" style="font-size:16px"></i></button>
+    </div>
+  </header>
+
+  <div style="padding:26px 28px 40px;display:flex;flex-direction:column;gap:22px;max-width:1320px;width:100%;box-sizing:border-box">
+
+<!-- ============ DASHBOARD ============ -->
+<sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:26px;font-weight:500">Your servers</h1>
+      <span style="font-size:13px;color:var(--color-neutral-400)">5 servers on node-01 · 3 running</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn btn-secondary"><i class="ph ph-funnel"></i>Filter</button>
+      <button class="btn btn-primary"><i class="ph ph-plus"></i>New server</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px">
+    <sc-for list="{{ servers }}" as="s" hint-placeholder-count="5">
+      <div class="card" style="padding:16px;gap:14px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg);transition:box-shadow .2s" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 0 24px color-mix(in oklab, var(--color-accent) 14%, transparent)">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <div style="width:34px;height:34px;border-radius:var(--radius-md);background:var(--color-accent-900);color:var(--color-accent-300);display:grid;place-items:center"><i class="{{ s.icon }}" style="font-size:18px"></i></div>
+          <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0">
+            <span style="font-size:15px;font-weight:500">{{ s.name }}</span>
+            <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-400)">{{ s.addr }}</span>
+          </div>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;background:{{ s.stBg }};color:{{ s.stFg }}"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>{{ s.state }}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <sc-for list="{{ s.bars }}" as="b" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-neutral-400)"><span>{{ b.k }}</span><span style="font-family:'JetBrains Mono',monospace;color:var(--color-text)">{{ b.v }}</span></div>
+              <div style="height:4px;border-radius:2px;background:var(--color-neutral-900);overflow:hidden"><div style="height:100%;width:{{ b.w }};background:{{ b.c }};border-radius:2px"></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</sc-if>
+
+<!-- ============ STATS ============ -->
+<sc-if value="{{ isStats }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:26px;font-weight:500">System stats</h1>
+      <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-neutral-400)"><span style="width:7px;height:7px;border-radius:50%;background:var(--ok);animation:{{ pulseAnim }}"></span>Live from node-01 · up 23d 4h 12m · load 1.42 1.18 0.96</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div class="seg" role="radiogroup" aria-label="Window">
+        <sc-for list="{{ windows }}" as="w" hint-placeholder-count="3">
+          <label class="seg-opt" style="white-space:nowrap"><input type="radio" name="win" checked="{{ w.on }}" onChange="{{ w.pick }}" style="position:absolute;opacity:0;pointer-events:none">{{ w.label }}</label>
+        </sc-for>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Mode">
+        <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+          <label class="seg-opt" style="white-space:nowrap"><input type="radio" name="mode" checked="{{ m.on }}" onChange="{{ m.pick }}" style="position:absolute;opacity:0;pointer-events:none">{{ m.label }}</label>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--radius-md);background:color-mix(in oklab, var(--warn) 10%, var(--color-surface));box-shadow:inset 0 0 0 1px color-mix(in oklab, var(--warn) 40%, transparent);font-size:13px">
+    <i class="ph ph-warning" style="font-size:17px;color:var(--warn)"></i>
+    <span><strong style="font-weight:500">Disk /var/lib/pterodactyl at 86%</strong> <span style="color:var(--color-neutral-300)">· threshold 85% · crossed 14 min ago</span></span>
+    <button class="btn btn-ghost" style="margin-left:auto;white-space:nowrap;flex:none">Edit thresholds</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+      <div class="card" style="padding:14px 16px;gap:8px;box-shadow:{{ k.ring }};border-radius:var(--radius-lg)">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-400)"><i class="{{ k.icon }}" style="font-size:15px"></i>{{ k.label }}<span style="margin-left:auto;font-size:10px;color:{{ k.flagC }}">{{ k.flag }}</span></div>
+        <div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:28px;font-weight:500;letter-spacing:-.01em">{{ k.value }}</span><span style="font-size:12px;color:var(--color-neutral-400)">{{ k.sub }}</span></div>
+        <div style="height:4px;border-radius:2px;background:var(--color-neutral-900);overflow:hidden"><div style="height:100%;width:{{ k.w }};background:{{ k.c }};transition:width .25s"></div></div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:12px">
+    <div class="card" style="padding:16px;gap:12px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span class="card-title" style="font-size:15px">{{ chartTitle }}</span>
+        <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-neutral-300)"><span style="width:14px;height:2px;background:var(--color-accent)"></span>CPU</span>
+        <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-neutral-300)"><span style="width:14px;height:2px;background:var(--color-neutral-400)"></span>Memory</span>
+        <span style="margin-left:auto;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-500)">{{ chartRange }}</span>
+      </div>
+      <svg viewBox="0 0 600 200" preserveAspectRatio="none" style="width:100%;height:220px;display:block">
+        <defs><linearGradient id="cpuFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--color-accent)" stop-opacity=".28"></stop><stop offset="1" stop-color="var(--color-accent)" stop-opacity="0"></stop></linearGradient></defs>
+        <line x1="0" x2="600" y1="50" y2="50" stroke="var(--color-neutral-900)" stroke-width="1"></line>
+        <line x1="0" x2="600" y1="100" y2="100" stroke="var(--color-neutral-900)" stroke-width="1"></line>
+        <line x1="0" x2="600" y1="150" y2="150" stroke="var(--color-neutral-900)" stroke-width="1"></line>
+        <line x1="0" x2="600" y1="{{ threshY }}" y2="{{ threshY }}" stroke="var(--warn)" stroke-width="1" stroke-dasharray="4 4" opacity=".7"></line>
+        <path d="{{ cpuArea }}" fill="url(#cpuFill)"></path>
+        <polyline points="{{ memPts }}" fill="none" stroke="var(--color-neutral-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"></polyline>
+        <polyline points="{{ cpuPts }}" fill="none" stroke="var(--color-accent)" stroke-width="2" vector-effect="non-scaling-stroke"></polyline>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-500)"><span>{{ axisL }}</span><span>CPU alert 90%</span><span>now</span></div>
+    </div>
+    <div class="card" style="padding:16px;gap:12px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+      <div style="display:flex;align-items:center"><span class="card-title" style="font-size:15px">Per-core</span><span style="margin-left:auto;font-size:11px;color:var(--color-neutral-400)">8 threads · Ryzen 7 5700X</span></div>
+      <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;height:150px;align-items:end">
+        <sc-for list="{{ cores }}" as="c" hint-placeholder-count="8">
+          <div style="display:flex;flex-direction:column;gap:6px;height:100%;justify-content:flex-end;align-items:center">
+            <div style="width:100%;flex:1;display:flex;align-items:flex-end;background:var(--color-neutral-900);border-radius:4px;overflow:hidden"><div style="width:100%;height:{{ c.h }};background:{{ c.col }};transition:height .25s"></div></div>
+            <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-500)">{{ c.n }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--color-neutral-400)">Network in</span><span style="font-family:'JetBrains Mono',monospace">{{ netIn }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--color-neutral-400)">Network out</span><span style="font-family:'JetBrains Mono',monospace">{{ netOut }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--color-neutral-400)">Swap</span><span style="font-family:'JetBrains Mono',monospace">0.4 / 4.0 GB</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--color-neutral-400)">Load (1m)</span><span style="font-family:'JetBrains Mono',monospace">1.42</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:12px">
+    <div class="card" style="padding:16px;gap:14px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+      <div style="display:flex;align-items:center"><span class="card-title" style="font-size:15px">Disk by mount</span></div>
+      <sc-for list="{{ mounts }}" as="m" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;font-size:12px;gap:8px"><span style="font-family:'JetBrains Mono',monospace">{{ m.path }}</span><span style="margin-left:auto;color:var(--color-neutral-400)">{{ m.used }}</span><span style="width:36px;text-align:right;color:{{ m.c }}">{{ m.pct }}</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--color-neutral-900);overflow:hidden"><div style="height:100%;width:{{ m.pct }};background:{{ m.c }}"></div></div>
+        </div>
+      </sc-for>
+      <div style="display:flex;flex-direction:column;gap:8px;padding-top:6px">
+        <span style="font-size:12px;color:var(--color-neutral-400)">7-day CPU · daily avg and peak</span>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:80px;align-items:end">
+          <sc-for list="{{ week }}" as="d" hint-placeholder-count="7">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+              <div style="position:relative;width:14px;height:{{ d.peak }};border-radius:3px;background:var(--color-accent-900)"><div style="position:absolute;bottom:0;left:0;right:0;height:{{ d.avgRel }};border-radius:3px;background:var(--color-accent-600)"></div></div>
+              <span style="font-size:10px;color:var(--color-neutral-500)">{{ d.day }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:16px;gap:10px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+      <div style="display:flex;align-items:center;gap:8px"><span class="card-title" style="font-size:15px">Server ranking</span><span style="font-size:11px;color:var(--color-neutral-400)">avg over {{ rankWindow }}</span><span class="tag tag-neutral" style="margin-left:auto">Retention 7 days</span></div>
+      <table class="table" style="font-size:13px">
+        <thead><tr><th>Server</th><th>State</th><th style="text-align:right">CPU</th><th style="text-align:right">Memory</th><th style="text-align:right">Peak</th><th style="text-align:right">Net</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ rank }}" as="r" hint-placeholder-count="5">
+            <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--color-neutral-500)">{{ r.i }}</span>{{ r.name }}</div></td><td><span style="font-size:11px;color:{{ r.stFg }}">● {{ r.state }}</span></td><td style="text-align:right;font-family:'JetBrains Mono',monospace">{{ r.cpu }}</td><td style="text-align:right;font-family:'JetBrains Mono',monospace">{{ r.mem }}</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-400)">{{ r.peak }}</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-400)">{{ r.net }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ CONSOLE ============ -->
+<sc-if value="{{ isConsole }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px"><h1 style="margin:0;font-size:26px;font-weight:500">suzune-bot</h1><span class="tag tag-outline">Docker bridge</span><span class="tag tag-neutral">Admin only</span></div>
+      <span style="font-size:13px;color:var(--color-neutral-400)">Whitelisted container <span style="font-family:'JetBrains Mono',monospace;color:var(--color-neutral-300)">3f9a1c0e2b7d</span> · node:20-alpine · commands are logged</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn btn-secondary" onClick="{{ doStart }}" disabled="{{ isRunning }}"><i class="ph ph-play"></i>Start</button>
+      <button class="btn btn-secondary" onClick="{{ doRestart }}"><i class="ph ph-arrow-clockwise"></i>Restart</button>
+      <button class="btn btn-secondary" onClick="{{ doStop }}" disabled="{{ isStopped }}" style="color:var(--danger)"><i class="ph ph-stop"></i>Stop</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:12px">
+    <div style="display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);background:{{ termBg }}">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--color-divider);background:color-mix(in oklab, var(--color-surface) 70%, transparent)">
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:{{ connC }}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;animation:{{ connAnim }}"></span>{{ connLabel }}</span>
+        <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-500)">{{ connMeta }}</span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:4px">
+          <div style="display:flex;align-items:center;gap:6px;height:26px;padding:0 8px;border:1px solid var(--color-divider);border-radius:var(--radius-sm);font-size:12px;color:var(--color-neutral-400);width:150px"><i class="ph ph-magnifying-glass"></i><input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Search output" aria-label="Search output" style="all:unset;flex:1;min-width:0;color:var(--color-text)"></div>
+          <button class="btn btn-ghost btn-icon" style="width:28px;height:28px;color:var(--color-neutral-300)" aria-label="Copy"><i class="ph ph-copy"></i></button>
+          <button class="btn btn-ghost btn-icon" style="width:28px;height:28px;color:var(--color-neutral-300)" aria-label="Clear" onClick="{{ doClear }}"><i class="ph ph-eraser"></i></button>
+          <button class="btn btn-ghost" style="font-size:12px;color:var(--color-neutral-300)" onClick="{{ simDrop }}">Simulate drop</button>
+        </div>
+      </div>
+      <div ref="{{ termRef }}" style="height:420px;overflow:auto;padding:12px 14px;font-family:{{ termFont }};font-size:{{ termSize }};line-height:1.6;white-space:pre-wrap;word-break:break-word">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="8">
+          <div style="display:flex;gap:12px;background:{{ l.hl }}"><span style="color:{{ l.dim }};flex:none">{{ l.t }}</span><span style="color:{{ l.lc }};flex:none;width:44px">{{ l.lvl }}</span><span style="color:{{ l.c }}">{{ l.text }}</span></div>
+        </sc-for>
+      </div>
+      <form onSubmit="{{ onSend }}" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--color-divider)">
+        <span style="font-family:'JetBrains Mono',monospace;color:var(--color-accent);font-size:13px">container@suzune-bot:~$</span>
+        <input value="{{ cmd }}" onInput="{{ onCmd }}" placeholder="Type a command, ↑ for history" aria-label="Command" style="all:unset;flex:1;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--color-text);caret-color:var(--color-accent)">
+        <span style="font-size:11px;color:var(--color-neutral-500)">10 / min</span>
+      </form>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:14px;gap:10px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <span class="card-kicker">Container</span>
+        <sc-for list="{{ cInfo }}" as="i" hint-placeholder-count="5">
+          <div style="display:flex;font-size:12px"><span style="color:var(--color-neutral-400)">{{ i.k }}</span><span style="margin-left:auto;font-family:'JetBrains Mono',monospace">{{ i.v }}</span></div>
+        </sc-for>
+      </div>
+      <div class="card" style="padding:14px;gap:10px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <span class="card-kicker">Audit log</span>
+        <sc-for list="{{ audit }}" as="a" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:2px;font-size:12px"><span style="font-family:'JetBrains Mono',monospace;color:var(--color-text)">{{ a.cmd }}</span><span style="color:var(--color-neutral-500);font-size:11px">{{ a.who }} · {{ a.at }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ PERSONALISE ============ -->
+<sc-if value="{{ isTheme }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:26px;font-weight:500">Personalisation</h1>
+      <span style="font-size:13px;color:var(--color-neutral-400)">Changes preview across the whole panel as you edit. Saved to your account.</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <span style="font-size:12px;color:var(--color-neutral-400)">{{ saveNote }}</span>
+      <button class="btn btn-ghost" onClick="{{ doReset }}">Reset to default</button>
+      <button class="btn btn-secondary" onClick="{{ doDiscard }}" disabled="{{ clean }}">Discard</button>
+      <button class="btn btn-primary" onClick="{{ doSave }}" disabled="{{ clean }}"><i class="ph ph-check"></i>Save</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:16px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:18px;gap:16px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <span class="card-kicker">Colour</span>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:12px;color:var(--color-neutral-300)">Accent</span>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <sc-for list="{{ presets }}" as="p" hint-placeholder-count="5">
+              <button onClick="{{ p.pick }}" aria-label="{{ p.name }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--color-neutral-400)">
+                <span style="width:34px;height:34px;border-radius:50%;background:{{ p.hex }};box-shadow:{{ p.ring }}"></span>{{ p.name }}
+              </button>
+            </sc-for>
+            <div style="display:flex;align-items:center;gap:8px;margin-left:8px">
+              <input type="color" value="{{ accent }}" onInput="{{ onHex }}" aria-label="Custom accent" style="width:34px;height:34px;border:none;background:none;padding:0;cursor:pointer">
+              <input class="input" value="{{ accent }}" onInput="{{ onHex }}" aria-label="Hex" style="width:96px;font-family:'JetBrains Mono',monospace;font-size:13px">
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;font-size:12px;color:var(--color-neutral-300)"><span>Background darkness</span><span style="margin-left:auto;font-family:'JetBrains Mono',monospace">{{ dark }}%</span></div><input type="range" min="0" max="100" value="{{ dark }}" onInput="{{ onDark }}" aria-label="Background darkness"></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;font-size:12px;color:var(--color-neutral-300)"><span>Surface tint</span><span style="margin-left:auto;font-family:'JetBrains Mono',monospace">{{ tint }}%</span></div><input type="range" min="0" max="100" value="{{ tint }}" onInput="{{ onTint }}" aria-label="Surface tint"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius-md);background:{{ cBg }};box-shadow:inset 0 0 0 1px {{ cBorder }};font-size:12px">
+          <i class="{{ cIcon }}" style="font-size:16px;color:{{ cFg }}"></i>
+          <span>{{ cMsg }}</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:6px"><span style="padding:3px 8px;border-radius:4px;background:var(--color-accent);color:{{ onAccent }};font-weight:500">Aa</span><span style="font-family:'JetBrains Mono',monospace;color:var(--color-neutral-400)">{{ ratio }}:1</span></span>
+        </div>
+      </div>
+      <div class="card" style="padding:18px;gap:16px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <span class="card-kicker">Shape &amp; type</span>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--color-neutral-300)">Corner radius</span>
+            <div class="seg"><sc-for list="{{ radii }}" as="r" hint-placeholder-count="3"><label class="seg-opt" style="white-space:nowrap"><input type="radio" name="rad" checked="{{ r.on }}" onChange="{{ r.pick }}" style="position:absolute;opacity:0;pointer-events:none">{{ r.label }}</label></sc-for></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex:1;min-width:200px"><div style="display:flex;font-size:12px;color:var(--color-neutral-300)"><span>Font size</span><span style="margin-left:auto;font-family:'JetBrains Mono',monospace">{{ scale }}%</span></div><input type="range" min="85" max="125" step="5" value="{{ scale }}" onInput="{{ onScale }}" aria-label="Font size"></div>
+        </div>
+        <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font-size:13px">
+          <input type="checkbox" checked="{{ anim }}" onChange="{{ onAnim }}" style="accent-color:var(--color-accent);width:16px;height:16px">
+          <span style="display:flex;flex-direction:column;gap:2px">Animations<span style="font-size:11px;color:var(--color-neutral-400)">Always off when your system requests reduced motion</span></span>
+        </label>
+      </div>
+      <div class="card" style="padding:18px;gap:16px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <span class="card-kicker">Console</span>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--color-neutral-300)">Font</span>
+            <div class="seg"><sc-for list="{{ fonts }}" as="f" hint-placeholder-count="3"><label class="seg-opt" style="white-space:nowrap"><input type="radio" name="cf" checked="{{ f.on }}" onChange="{{ f.pick }}" style="position:absolute;opacity:0;pointer-events:none">{{ f.label }}</label></sc-for></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--color-neutral-300)">Colour scheme</span>
+            <div style="display:flex;gap:8px"><sc-for list="{{ schemes }}" as="s" hint-placeholder-count="3">
+              <button onClick="{{ s.pick }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:var(--radius-md);background:{{ s.bg }};box-shadow:{{ s.ring }};width:86px">
+                <span style="display:flex;gap:3px"><span style="width:10px;height:10px;border-radius:2px;background:{{ s.c1 }}"></span><span style="width:10px;height:10px;border-radius:2px;background:{{ s.c2 }}"></span><span style="width:10px;height:10px;border-radius:2px;background:{{ s.c3 }}"></span><span style="width:10px;height:10px;border-radius:2px;background:{{ s.c4 }}"></span></span>
+                <span style="font-size:11px;color:{{ s.fg }}">{{ s.name }}</span>
+              </button>
+            </sc-for></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:sticky;top:20px;display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500)">Preview</span>
+      <div class="card" style="padding:16px;gap:14px;box-shadow:var(--shadow-sm);border-radius:var(--radius-lg)">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:34px;height:34px;border-radius:var(--radius-md);background:var(--color-accent-900);color:var(--color-accent-300);display:grid;place-items:center"><i class="ph ph-cube" style="font-size:18px"></i></div>
+          <div style="display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-size:15px;font-weight:500">mc-survival</span><span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--color-neutral-400)">10.0.4.12:25565</span></div>
+          <span style="font-size:11px;padding:3px 8px;border-radius:999px;background:color-mix(in oklab, var(--ok) 16%, transparent);color:var(--ok)">● Running</span>
+        </div>
+        <div style="height:4px;border-radius:2px;background:var(--color-neutral-900)"><div style="height:100%;width:62%;background:var(--color-accent);border-radius:2px"></div></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-primary">Primary</button><button class="btn btn-secondary">Secondary</button><span class="tag tag-accent" style="align-self:center">Tag</span></div>
+        <input class="input" placeholder="Focus me to see the ring" aria-label="Preview input">
+      </div>
+      <div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);background:{{ termBg }};padding:12px 14px;font-family:{{ termFont }};font-size:{{ termSize }};line-height:1.6">
+        <sc-for list="{{ previewLines }}" as="l" hint-placeholder-count="4">
+          <div style="display:flex;gap:10px"><span style="color:{{ l.lc }};width:44px;flex:none">{{ l.lvl }}</span><span style="color:{{ l.c }}">{{ l.text }}</span></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-400);padding:4px 2px"><i class="ph ph-lock-simple"></i>Admins can set this as the default theme and lock it in Admin › Appearance.</div>
+    </div>
+  </div>
+</sc-if>
+
+  </div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dash&quot;,&quot;stats&quot;,&quot;console&quot;,&quot;theme&quot;],&quot;default&quot;:&quot;stats&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;simulateLive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const PRESETS=[['Violet','#8b5cf6'],['Indigo','#6366f1'],['Fuchsia','#d946ef'],['Cyan','#22d3ee'],['Emerald','#34d399'],['Nocturne','#9184d9']];
+const SCHEMES={Nocturne:{bg:'#0f1019',fg:'#d6d7e2',dim:'#5b5f72',info:'#a99ff0',ok:'#7fd1ae',warn:'#e6c37a',err:'#ef8f8f'},Dracula:{bg:'#1e1f29',fg:'#f8f8f2',dim:'#6272a4',info:'#bd93f9',ok:'#50fa7b',warn:'#f1fa8c',err:'#ff5555'},'Tokyo':{bg:'#16161e',fg:'#c0caf5',dim:'#565f89',info:'#7aa2f7',ok:'#9ece6a',warn:'#e0af68',err:'#f7768e'}};
+const FONTS={'JetBrains':"'JetBrains Mono', monospace",'Menlo':"Menlo, ui-monospace, monospace",'System':"ui-monospace, monospace"};
+const DEFAULTS={accent:'#9184d9',dark:50,tint:30,radius:'Default',scale:100,font:'JetBrains',scheme:'Nocturne',anim:true};
+const hx=h=>{h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255]};
+const toHex=a=>'#'+a.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,'0')).join('');
+const mix=(a,b,t)=>toHex(hx(a).map((v,i)=>v+(hx(b)[i]-v)*t));
+const lum=h=>{const c=hx(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+const valid=h=>/^#[0-9a-f]{6}$/i.test(h);
+const LOGS=[['info','Starting suzune-bot v2.4.1 (node 20.11.0)'],['info','Loaded 42 commands from ./commands'],['ok','Connected to gateway · shard 0/1 · 38ms'],['info','Cache warm: 1,204 guilds, 88,310 members'],['warn','Rate limited on /channels/9918…/messages · retry in 1.2s'],['info','[music] queue resumed in guild 7731'],['ok','Healthcheck passed'],['err','Unhandled rejection in [reminders]: ETIMEDOUT 10.0.4.2:5432'],['info','[db] reconnect attempt 1/5'],['ok','[db] pool restored (8 connections)'],['info','Heartbeat ACK · 41ms']];
+const now=()=>new Date().toTimeString().slice(0,8);
+const N=120;
+const seed=(b,a)=>Array.from({length:N},(_,i)=>Math.max(2,Math.min(98,b+Math.sin(i/7)*a+Math.random()*a)));
+
+class Component extends DCLogic {
+  state={screen:this.props.startScreen||'stats',saved:{...DEFAULTS},draft:{...DEFAULTS},win:'15',mode:'node',cpu:seed(38,14),mem:seed(61,3),cores:Array.from({length:8},()=>20+Math.random()*60),netIn:42.1,netOut:12.8,
+    lines:LOGS.map(([l,t],i)=>({t:'14:0'+Math.floor(i/2)+':'+String(10+i*4).slice(-2),l,text:t})),cmd:'',search:'',conn:'connected',run:'running',saveNote:'',
+    audit:[{cmd:'!reload commands',who:'akira',at:'13:58:02'},{cmd:'npm run migrate',who:'akira',at:'Yesterday 22:14'},{cmd:'!cache flush',who:'mei',at:'Yesterday 19:40'}]};
+  termRef=React.createRef();
+  componentDidMount(){this.t=setInterval(()=>{if(this.props.simulateLive===false)return;this.setState(s=>{const c=s.cpu.slice(1);const last=s.cpu[N-1];c.push(Math.max(3,Math.min(97,last+(Math.random()-.5)*14)));const m=s.mem.slice(1);m.push(Math.max(50,Math.min(75,s.mem[N-1]+(Math.random()-.5)*2)));
+    return{cpu:c,mem:m,cores:s.cores.map(v=>Math.max(3,Math.min(99,v+(Math.random()-.5)*22))),netIn:Math.max(5,s.netIn+(Math.random()-.5)*8),netOut:Math.max(2,s.netOut+(Math.random()-.5)*3)}})},1000);this.scroll()}
+  componentWillUnmount(){clearInterval(this.t);clearTimeout(this.r)}
+  componentDidUpdate(p,ps){if(ps.lines!==this.state.lines||ps.screen!==this.state.screen)this.scroll()}
+  scroll(){requestAnimationFrame(()=>{const el=this.termRef.current;if(el)el.scrollTop=el.scrollHeight})}
+  set(k,v){this.setState(s=>({draft:{...s.draft,[k]:v},saveNote:''}))}
+  push(l,text){this.setState(s=>({lines:[...s.lines,{t:now(),l,text}].slice(-200)}))}
+  renderVals(){
+    const s=this.state,d=s.draft,acc=valid(d.accent)?d.accent:'#9184d9';
+    const bg=mix('#1d2032','#08080d',d.dark/100);
+    const surf=mix(mix(bg,'#e9e9ed',.07),acc,d.tint/100*.18);
+    const rad={Sharp:['2px','4px'],Default:['8px','14px'],Rounded:['12px','20px']}[d.radius];
+    const ok='oklch(0.8 0.12 160)',warn='oklch(0.83 0.12 80)',danger='oklch(0.72 0.14 22)';
+    const rootStyle={'--color-bg':bg,'--color-surface':surf,'--color-accent':acc,'--color-accent-100':mix(acc,'#ffffff',.9),'--color-accent-200':mix(acc,'#ffffff',.78),'--color-accent-300':mix(acc,'#ffffff',.55),'--color-accent-400':mix(acc,'#ffffff',.3),'--color-accent-600':mix(acc,'#000000',.18),'--color-accent-700':mix(acc,bg,.42),'--color-accent-800':mix(acc,bg,.62),'--color-accent-900':mix(acc,bg,.8),
+      '--radius-md':rad[0],'--radius-lg':rad[1],'--ok':ok,'--warn':warn,'--danger':danger,zoom:d.scale/100};
+    const r=ratio(acc,bg),onAcc=ratio(acc,'#15131f')>=ratio(acc,'#f3f5fe')?'#15131f':'#f3f5fe',r2=ratio(acc,onAcc);
+    const pass=r>=3&&r2>=4.5;
+    const sc=SCHEMES[d.scheme];const lc={info:sc.info,ok:sc.ok,warn:sc.warn,err:sc.err,cmd:acc,out:sc.fg};
+    const scr=s.screen,go=k=>()=>this.setState({screen:k});
+    const NAV=[['dash','Servers','ph ph-squares-four','5'],['stats','System stats','ph ph-chart-line-up',''],['console','Container console','ph ph-terminal-window',''],['theme','Personalisation','ph ph-paint-brush','']];
+    const nav=NAV.map(([k,label,icon,meta])=>({label,icon,meta,go:go(k),fg:scr===k?'var(--color-text)':'var(--color-neutral-400)',bg:scr===k?'color-mix(in oklab, var(--color-accent) 14%, transparent)':'transparent',ring:scr===k?'inset 2px 0 0 var(--color-accent)':'none'}));
+    const stat=st=>st==='Running'?{stBg:'color-mix(in oklab, '+ok+' 16%, transparent)',stFg:ok}:st==='Starting'?{stBg:'color-mix(in oklab, '+warn+' 16%, transparent)',stFg:warn}:{stBg:'var(--color-neutral-900)',stFg:'var(--color-neutral-400)'};
+    const bar=(k,v,p)=>({k,v,w:p+'%',c:p>85?danger:p>70?warn:'var(--color-accent)'});
+    const SV=[['mc-survival','ph ph-cube','10.0.4.12:25565','Running',62,71,48],['suzune-bot','ph ph-robot','docker · 3f9a1c0e','Running',8,34,12],['valheim-dedicated','ph ph-sword','10.0.4.12:2456','Starting',41,55,63],['discord-relay','ph ph-broadcast','10.0.4.12:8080','Running',3,18,5],['terraria-tmod','ph ph-tree','10.0.4.12:7777','Offline',0,0,88]];
+    const servers=SV.map(([name,icon,addr,state,c,m,dk])=>({name,icon,addr,state,...stat(state),bars:[bar('CPU',c+'%',c),bar('Memory',m+'%',m),bar('Disk',dk+'%',dk)]}));
+    const wn={'5':30,'15':60,'60':120}[s.win];
+    const pts=arr=>arr.slice(-wn).map((v,i,a)=>(i/(a.length-1)*600).toFixed(1)+','+(200-v*2).toFixed(1)).join(' ');
+    const cpuPts=pts(s.cpu),cpuNow=s.cpu[N-1],memNow=s.mem[N-1];
+    const kp=(icon,label,value,sub,p,flag,neutral)=>({icon,label,value,sub,w:p+'%',c:neutral?'var(--color-neutral-600)':p>85?danger:p>70?warn:'var(--color-accent)',flag:flag||'',flagC:flag?warn:'transparent',ring:flag?'0 0 0 1px color-mix(in oklab, '+warn+' 45%, transparent)':'var(--shadow-sm)'});
+    const isNode=s.mode==='node';
+    const kpis=isNode?[kp('ph ph-cpu','CPU',cpuNow.toFixed(0)+'%','of 8 threads',cpuNow),kp('ph ph-memory','Memory',(memNow*.32).toFixed(1)+' GB','/ 32 GB',memNow),kp('ph ph-hard-drives','Disk',  '412 GB','/ 480 GB',86,'ALERT'),kp('ph ph-clock','Uptime','23d 4h','since 26 Sep',100,'',true)]
+      :[kp('ph ph-cpu','mc-survival CPU',(cpuNow*.9).toFixed(0)+'%','limit 400%',cpuNow*.9),kp('ph ph-memory','Memory','5.7 GB','/ 8 GB',71),kp('ph ph-hard-drives','Disk','9.6 GB','/ 20 GB',48),kp('ph ph-clock','Uptime','6d 11h','Running',100,'',true)];
+    const mounts=[['/','38 / 120 GB',32],['/var/lib/pterodactyl','412 / 480 GB',86],['/mnt/backups','1.1 / 2.0 TB',55]].map(([path,used,p])=>({path,used,pct:p+'%',c:p>85?warn:'var(--color-accent)'}));
+    const week=[['Mon',44,78],['Tue',39,71],['Wed',51,92],['Thu',47,83],['Fri',58,96],['Sat',63,98],['Sun',41,74]].map(([day,a,p])=>({day,peak:p+'%',avgRel:Math.round(a/p*100)+'%'}));
+    const rank=[['mc-survival','Running','58%','5.7 GB','312%','1.2 GB'],['valheim-dedicated','Starting','36%','4.4 GB','188%','640 MB'],['suzune-bot','Running','7%','1.1 GB','41%','210 MB'],['discord-relay','Running','2%','280 MB','9%','88 MB'],['terraria-tmod','Offline','0%','0 B','64%','0 B']].map(([name,state,cpu,mem,peak,net],i)=>({i:String(i+1).padStart(2,'0'),name,state,cpu,mem,peak,net,stFg:stat(state).stFg}));
+    const cores=s.cores.map((v,i)=>({h:v+'%',n:i,col:v>85?danger:v>70?warn:'var(--color-accent)'}));
+    const q=s.search.toLowerCase();
+    const lines=s.lines.map(l=>({t:l.t,lvl:l.l==='cmd'?'$':l.l==='out'?'':l.l.toUpperCase(),text:l.text,c:l.l==='cmd'?sc.fg:l.l==='err'?sc.err:sc.fg,lc:lc[l.l],dim:sc.dim,hl:q&&l.text.toLowerCase().includes(q)?'color-mix(in oklab, '+acc+' 22%, transparent)':'transparent'}));
+    const connMap={connected:['Connected',ok,'none','wss · 18ms · auto-reconnect on'],reconnecting:['Reconnecting…',warn,'pulse 1s infinite','attempt 2 · backoff 2s'],stopped:['Container stopped','var(--color-neutral-400)','none','socket idle']};
+    const cs=s.run==='stopped'?connMap.stopped:connMap[s.conn];
+    const sel=(list,cur,key,mk)=>list.map(v=>({label:v,on:cur===v,pick:mk?mk(v):()=>this.set(key,v)}));
+    return{
+      rootStyle,isDash:scr==='dash',isStats:scr==='stats',isConsole:scr==='console',isTheme:scr==='theme',
+      title:{dash:'Servers',stats:'System stats',console:'Container console',theme:'Personalisation'}[scr],nav,servers,
+      pulseAnim:d.anim?'pulse 2s infinite':'none',
+      windows:['5','15','60'].map(v=>({label:v+' min',on:s.win===v,pick:()=>this.setState({win:v})})),
+      modes:[['node','Node'],['server','mc-survival']].map(([v,label])=>({label,on:s.mode===v,pick:()=>this.setState({mode:v})})),
+      kpis,chartTitle:isNode?'Node CPU & memory':'mc-survival CPU & memory',chartRange:'1s samples · '+wn+' pts',axisL:'−'+s.win+' min',
+      cpuPts,memPts:pts(s.mem),cpuArea:'M0,200 L'+cpuPts.split(' ').join(' L')+' L600,200 Z',threshY:20,
+      cores,netIn:s.netIn.toFixed(1)+' Mb/s',netOut:s.netOut.toFixed(1)+' Mb/s',mounts,week,rank,rankWindow:s.win+' min',
+      isRunning:s.run==='running',isStopped:s.run==='stopped',
+      doStart:()=>{this.setState({run:'running'});this.push('info','Container started by akira');this.push('ok','Connected to gateway · shard 0/1')},
+      doStop:()=>{this.setState({run:'stopped'});this.push('warn','SIGTERM sent by akira · exited (0)')},
+      doRestart:()=>{this.setState({run:'running'});this.push('warn','Restart requested by akira');this.push('info','Starting suzune-bot v2.4.1');this.push('ok','Connected to gateway · shard 0/1 · 36ms')},
+      doClear:()=>this.setState({lines:[]}),
+      simDrop:()=>{this.setState({conn:'reconnecting'});this.push('warn','Socket closed (1006) · reconnecting');clearTimeout(this.r);this.r=setTimeout(()=>{this.setState({conn:'connected'});this.push('ok','Reconnected · replayed 3 missed lines')},2400)},
+      termRef:this.termRef,termBg:sc.bg,termFont:FONTS[d.font],termSize:'13px',lines,
+      connLabel:cs[0],connC:cs[1],connAnim:d.anim?cs[2]:'none',connMeta:cs[3],
+      search:s.search,onSearch:e=>this.setState({search:e.target.value}),
+      cmd:s.cmd,onCmd:e=>this.setState({cmd:e.target.value}),
+      onSend:e=>{e.preventDefault();const c=s.cmd.trim();if(!c)return;this.setState(st=>({cmd:'',audit:[{cmd:c,who:'akira',at:now()},...st.audit].slice(0,5)}));this.push('cmd',c);setTimeout(()=>this.push('out',c.startsWith('!')?'ok: '+c.slice(1)+' executed':'sh: '+c.split(' ')[0]+': ran with exit code 0'),250)},
+      cInfo:[['Status',s.run==='running'?'running':'exited'],['Image','node:20-alpine'],['Uptime',s.run==='running'?'2d 03h':'—'],['Memory','212 / 512 MB'],['Restart policy','unless-stopped']].map(([k,v])=>({k,v})),
+      audit:s.audit,
+      presets:PRESETS.map(([name,hex])=>({name,hex,pick:()=>this.set('accent',hex),ring:d.accent.toLowerCase()===hex?'0 0 0 2px var(--color-bg), 0 0 0 4px '+hex:'inset 0 0 0 1px rgba(255,255,255,.08)'})),
+      accent:d.accent,onHex:e=>{let v=e.target.value.trim();if(v&&v[0]!=='#')v='#'+v;this.set('accent',v)},
+      dark:d.dark,tint:d.tint,scale:d.scale,anim:d.anim,
+      onDark:e=>this.set('dark',+e.target.value),onTint:e=>this.set('tint',+e.target.value),onScale:e=>this.set('scale',+e.target.value),onAnim:e=>this.set('anim',e.target.checked),
+      ratio:r.toFixed(1),onAccent:onAcc,
+      cMsg:pass?'Passes AA: accent on background '+r.toFixed(1)+':1, text on accent '+r2.toFixed(1)+':1':'Low contrast: accent on background is '+r.toFixed(1)+':1 (needs 3:1 for UI)',
+      cIcon:pass?'ph ph-check-circle':'ph ph-warning',cFg:pass?ok:warn,
+      cBg:pass?'color-mix(in oklab, '+ok+' 8%, transparent)':'color-mix(in oklab, '+warn+' 10%, transparent)',
+      cBorder:pass?'color-mix(in oklab, '+ok+' 30%, transparent)':'color-mix(in oklab, '+warn+' 45%, transparent)',
+      radii:sel(['Sharp','Default','Rounded'],d.radius,'radius'),fonts:sel(Object.keys(FONTS),d.font,'font'),
+      schemes:Object.entries(SCHEMES).map(([name,c])=>({name,bg:c.bg,fg:c.fg,c1:c.info,c2:c.ok,c3:c.warn,c4:c.err,pick:()=>this.set('scheme',name),ring:d.scheme===name?'0 0 0 1px var(--color-accent)':'0 0 0 1px var(--color-divider)'})),
+      previewLines:[['info','Server marked as running'],['ok','Done (4.21s)! For help, type "help"'],['warn','Can\'t keep up! 2041ms behind'],['err','Failed to bind port 25575']].map(([l,text])=>({lvl:l.toUpperCase(),text,lc:lc[l],c:l==='err'?sc.err:sc.fg})),
+      clean:JSON.stringify(s.draft)===JSON.stringify(s.saved),saveNote:s.saveNote,
+      doSave:()=>this.setState(st=>({saved:{...st.draft},saveNote:'Saved'})),
+      doDiscard:()=>this.setState(st=>({draft:{...st.saved},saveNote:''})),
+      doReset:()=>this.setState({draft:{...DEFAULTS},saveNote:''})
+    };
+  }
+}
+</script>
+</body>
+</html>

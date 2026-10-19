@@ -1,0 +1,464 @@
+/*
+ * Nocturne for the Pterodactyl admin area (AdminLTE 2 + Bootstrap 3).
+ * Loaded after AdminLTE's own sheets, so plain selectors win; !important is
+ * only used where AdminLTE itself uses it or sets inline styles.
+ */
+
+body,
+.wrapper,
+.content-wrapper,
+.main-footer {
+    background: var(--nocturne-bg) !important;
+    color: var(--nocturne-text);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.content-wrapper {
+    background:
+        radial-gradient(1200px 600px at 0% 0%, color-mix(in oklab, var(--nocturne-accent) 6%, transparent), transparent 60%),
+        var(--nocturne-bg) !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+}
+
+a {
+    color: var(--nocturne-accent-300);
+}
+
+a:hover,
+a:focus {
+    color: var(--nocturne-text);
+}
+
+code,
+pre,
+kbd,
+.code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+code {
+    background: var(--nocturne-accent-900);
+    color: var(--nocturne-accent-300);
+    border-radius: 4px;
+}
+
+pre {
+    background: var(--nocturne-bg-deep);
+    color: var(--nocturne-text);
+    border: 1px solid var(--nocturne-divider);
+}
+
+::selection {
+    background: color-mix(in srgb, var(--nocturne-accent) 30%, transparent);
+}
+
+/* ------------------------------------------------------------ header --- */
+
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo,
+.skin-blue .main-header .logo:hover {
+    background: color-mix(in oklab, var(--nocturne-bg) 70%, #000) !important;
+    color: var(--nocturne-text);
+    border-bottom: 1px solid var(--nocturne-divider);
+}
+
+.skin-blue .main-header .logo {
+    border-right: 1px solid var(--nocturne-divider);
+    font-weight: 500;
+}
+
+.skin-blue .main-header .navbar .nav > li > a,
+.skin-blue .main-header .navbar .sidebar-toggle {
+    color: var(--nocturne-muted);
+}
+
+.skin-blue .main-header .navbar .nav > li > a:hover,
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background: color-mix(in srgb, var(--nocturne-text) 6%, transparent);
+    color: var(--nocturne-text);
+}
+
+/* ----------------------------------------------------------- sidebar --- */
+
+.skin-blue .main-sidebar,
+.skin-blue .left-side,
+.skin-blue .wrapper {
+    background: color-mix(in oklab, var(--nocturne-bg) 70%, #000);
+}
+
+.skin-blue .main-sidebar {
+    border-right: 1px solid var(--nocturne-divider);
+}
+
+.skin-blue .sidebar-menu > li.header {
+    background: transparent;
+    color: var(--nocturne-muted);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+}
+
+.skin-blue .sidebar-menu > li > a {
+    color: var(--nocturne-muted);
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--nocturne-radius) var(--nocturne-radius) 0;
+    margin-right: 8px;
+}
+
+.skin-blue .sidebar-menu > li:hover > a {
+    background: color-mix(in srgb, var(--nocturne-text) 6%, transparent);
+    color: var(--nocturne-text);
+}
+
+.skin-blue .sidebar-menu > li.active > a {
+    background: color-mix(in oklab, var(--nocturne-accent) 14%, transparent);
+    border-left-color: var(--nocturne-accent);
+    color: var(--nocturne-text);
+}
+
+.skin-blue .sidebar-menu > li > .treeview-menu {
+    background: transparent;
+}
+
+/* ------------------------------------------------------------- boxes --- */
+
+.content-header > h1 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.content-header > h1 > small,
+.content-header > .breadcrumb > li > a,
+.content-header > .breadcrumb > li {
+    color: var(--nocturne-muted);
+}
+
+.box,
+.nav-tabs-custom,
+.info-box,
+.small-box,
+.panel,
+.well {
+    background: var(--nocturne-surface);
+    color: var(--nocturne-text);
+    border: 0;
+    border-radius: var(--nocturne-radius-lg);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent);
+}
+
+.box.box-primary,
+.box.box-info,
+.box.box-success,
+.box.box-warning,
+.box.box-danger,
+.box.box-default {
+    border-top: 0;
+}
+
+.box.box-primary { box-shadow: inset 0 2px 0 var(--nocturne-accent), 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent); }
+.box.box-success { box-shadow: inset 0 2px 0 var(--nocturne-ok), 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent); }
+.box.box-warning { box-shadow: inset 0 2px 0 var(--nocturne-warn), 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent); }
+.box.box-danger { box-shadow: inset 0 2px 0 var(--nocturne-danger), 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 10%, transparent); }
+
+.box-header,
+.box-footer,
+.panel-heading,
+.panel-footer {
+    background: transparent !important;
+    color: var(--nocturne-text);
+    border-color: var(--nocturne-divider) !important;
+}
+
+.box-header.with-border {
+    border-bottom: 1px solid var(--nocturne-divider);
+}
+
+.box-header .box-title {
+    font-weight: 500;
+}
+
+.box-body,
+.box-footer {
+    border-radius: 0 0 var(--nocturne-radius-lg) var(--nocturne-radius-lg);
+}
+
+.info-box-icon,
+.small-box .icon {
+    background: var(--nocturne-accent-900) !important;
+    color: var(--nocturne-accent-300) !important;
+    border-radius: var(--nocturne-radius-lg) 0 0 var(--nocturne-radius-lg);
+}
+
+/* ------------------------------------------------------------ tables --- */
+
+.table,
+.table > thead > tr > th,
+.table > tbody > tr > td {
+    color: var(--nocturne-text);
+    border-color: var(--nocturne-divider) !important;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th {
+    color: var(--nocturne-muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: color-mix(in srgb, var(--nocturne-text) 3%, transparent);
+}
+
+.table-hover > tbody > tr:hover {
+    background: color-mix(in srgb, var(--nocturne-text) 5%, transparent);
+}
+
+/* ------------------------------------------------------------- forms --- */
+
+.form-control,
+.input-group-addon,
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.select2-dropdown {
+    background: var(--nocturne-raised) !important;
+    color: var(--nocturne-text) !important;
+    border: 1px solid var(--nocturne-divider) !important;
+    border-radius: var(--nocturne-radius) !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus,
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--open .select2-selection--single {
+    border-color: var(--nocturne-accent) !important;
+    caret-color: var(--nocturne-accent);
+}
+
+.form-control[disabled],
+.form-control[readonly] {
+    background: var(--nocturne-bg-deep) !important;
+    color: var(--nocturne-muted) !important;
+}
+
+.form-control::placeholder {
+    color: var(--nocturne-muted);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--nocturne-text);
+}
+
+.select2-container--default .select2-results__option[aria-selected='true'] {
+    background: var(--nocturne-accent-800);
+    color: var(--nocturne-text);
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--nocturne-accent-700);
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: var(--nocturne-accent-800);
+    border-color: var(--nocturne-accent-700);
+    color: var(--nocturne-text);
+}
+
+.select2-search--dropdown .select2-search__field {
+    background: var(--nocturne-bg);
+    color: var(--nocturne-text);
+    border-color: var(--nocturne-divider);
+}
+
+label,
+.control-label {
+    color: var(--nocturne-text);
+    font-weight: 500;
+}
+
+.help-block,
+.text-muted,
+.small,
+small {
+    color: var(--nocturne-muted);
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+    accent-color: var(--nocturne-accent);
+}
+
+/* ----------------------------------------------------------- buttons --- */
+
+.btn {
+    border-radius: var(--nocturne-radius);
+    font-weight: 500;
+}
+
+.btn-primary,
+.btn-primary:focus {
+    background: transparent;
+    color: var(--nocturne-accent);
+    border: 1px solid var(--nocturne-accent);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active {
+    background: color-mix(in srgb, var(--nocturne-accent) 14%, transparent) !important;
+    color: var(--nocturne-accent-300) !important;
+    border-color: var(--nocturne-accent) !important;
+}
+
+.btn-default {
+    background: transparent;
+    color: var(--nocturne-text);
+    border: 1px solid var(--nocturne-divider);
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+    background: color-mix(in srgb, var(--nocturne-text) 7%, transparent) !important;
+    color: var(--nocturne-text) !important;
+    border-color: var(--nocturne-divider) !important;
+}
+
+.btn-success { background: transparent; color: var(--nocturne-ok); border: 1px solid var(--nocturne-ok); }
+.btn-success:hover, .btn-success:focus { background: color-mix(in srgb, var(--nocturne-ok) 14%, transparent); color: var(--nocturne-ok); border-color: var(--nocturne-ok); }
+.btn-warning { background: transparent; color: var(--nocturne-warn); border: 1px solid var(--nocturne-warn); }
+.btn-warning:hover, .btn-warning:focus { background: color-mix(in srgb, var(--nocturne-warn) 14%, transparent); color: var(--nocturne-warn); border-color: var(--nocturne-warn); }
+.btn-danger { background: transparent; color: var(--nocturne-danger); border: 1px solid var(--nocturne-danger); }
+.btn-danger:hover, .btn-danger:focus { background: color-mix(in srgb, var(--nocturne-danger) 14%, transparent); color: var(--nocturne-danger); border-color: var(--nocturne-danger); }
+.btn-info { background: transparent; color: var(--nocturne-accent-300); border: 1px solid var(--nocturne-accent-700); }
+.btn-info:hover, .btn-info:focus { background: color-mix(in srgb, var(--nocturne-accent) 10%, transparent); color: var(--nocturne-accent-300); }
+
+.btn:focus-visible,
+.form-control:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--nocturne-accent) !important;
+    outline-offset: 2px;
+}
+
+/* ------------------------------------------------- labels and callouts --- */
+
+.label {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.label-primary, .bg-blue, .bg-light-blue, .bg-aqua { background: var(--nocturne-accent-800) !important; color: var(--nocturne-accent-300) !important; }
+.label-success, .bg-green { background: color-mix(in srgb, var(--nocturne-ok) 18%, transparent) !important; color: var(--nocturne-ok) !important; }
+.label-warning, .bg-yellow, .bg-orange { background: color-mix(in srgb, var(--nocturne-warn) 18%, transparent) !important; color: var(--nocturne-warn) !important; }
+.label-danger, .bg-red { background: color-mix(in srgb, var(--nocturne-danger) 18%, transparent) !important; color: var(--nocturne-danger) !important; }
+.label-default, .bg-gray { background: var(--nocturne-raised) !important; color: var(--nocturne-text) !important; }
+
+.callout,
+.callout.callout-info,
+.callout.callout-success,
+.callout.callout-warning,
+.callout.callout-danger,
+.alert,
+.alert.alert-info,
+.alert.alert-success,
+.alert.alert-warning,
+.alert.alert-danger {
+    background: var(--nocturne-surface) !important;
+    color: var(--nocturne-text) !important;
+    border: 0 !important;
+    border-left: 3px solid var(--nocturne-accent) !important;
+    border-radius: var(--nocturne-radius);
+}
+
+.callout.callout-success, .alert-success { border-left-color: var(--nocturne-ok) !important; }
+.callout.callout-warning, .alert-warning { border-left-color: var(--nocturne-warn) !important; }
+.callout.callout-danger, .alert-danger { border-left-color: var(--nocturne-danger) !important; }
+
+/* -------------------------------------------------------------- tabs --- */
+
+.nav-tabs-custom > .nav-tabs {
+    border-bottom-color: var(--nocturne-divider);
+}
+
+.nav-tabs-custom > .nav-tabs > li > a {
+    color: var(--nocturne-muted);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: var(--nocturne-accent);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active > a,
+.nav-tabs-custom > .nav-tabs > li.active:hover > a {
+    background: transparent;
+    color: var(--nocturne-text);
+}
+
+.nav-tabs-custom > .tab-content {
+    background: transparent;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    background: var(--nocturne-surface);
+    color: var(--nocturne-text);
+    border-color: var(--nocturne-divider);
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover {
+    background: var(--nocturne-accent-800);
+    border-color: var(--nocturne-accent);
+    color: var(--nocturne-text);
+}
+
+/* ------------------------------------------------- modals and dialogs --- */
+
+.modal-content,
+.sweet-alert,
+.dropdown-menu {
+    background: var(--nocturne-surface);
+    color: var(--nocturne-text);
+    border: 0;
+    border-radius: var(--nocturne-radius-lg);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--nocturne-text) 16%, transparent), 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--nocturne-divider);
+}
+
+.sweet-alert h2,
+.sweet-alert p {
+    color: var(--nocturne-text);
+}
+
+.dropdown-menu > li > a {
+    color: var(--nocturne-text);
+}
+
+.dropdown-menu > li > a:hover {
+    background: color-mix(in srgb, var(--nocturne-text) 7%, transparent);
+    color: var(--nocturne-text);
+}
+
+.close {
+    color: var(--nocturne-text);
+    text-shadow: none;
+}
+
+.main-footer {
+    border-top: 1px solid var(--nocturne-divider);
+    color: var(--nocturne-muted);
+}
+
+hr {
+    border-top-color: var(--nocturne-divider);
+}

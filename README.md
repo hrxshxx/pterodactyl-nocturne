@@ -1,6 +1,6 @@
 # Pterodactyl Nocturne
 
-A dark, quiet reskin for an existing [Pterodactyl](https://pterodactyl.io) 1.11.x panel, based on the Nocturne design system: a blue-grey ground, Inter at medium weight, soft 8px corners, and a blurple accent used as a line and a glow rather than a flood.
+A dark, quiet reskin for an existing [Pterodactyl](https://pterodactyl.io) panel (1.11 through 1.15), based on the Nocturne design system: a blue-grey ground, Inter at medium weight, soft 8px corners, and a blurple accent used as a line and a glow rather than a flood.
 
 It's cosmetic only. Nothing about how the panel works changes, no database migrations, no new routes, and it can be removed with one command.
 
@@ -83,6 +83,6 @@ This restores the original files from `.nocturne-backup/`, deletes `public/theme
 
 ## Notes
 
-- Built and tested against Pterodactyl **v1.11.11** source. The installer warns on other versions and stops, without changing anything, if a file it patches doesn't look like upstream.
+- Built and tested against Pterodactyl **v1.11.11** and **v1.15.1**. The installer warns on other versions. If a file it patches doesn't look like upstream, it stops before writing anything.
 - The design mockup in [`design/`](design/) also sketches a left sidebar layout, a node "System stats" page, a container console with an audit log, and a per-user Personalisation screen. Those are new panel features rather than a reskin, so this theme doesn't include them. The Personalisation choices are available install-wide through `nocturne.config.json`.
 - Panel selectors that target upstream components use the readable part of styled-components class names (for example `ServerRow__StatusIndicatorBox-`), which upstream's build keeps. If a future panel version renames a component, that one tweak stops applying, but the palette still works.

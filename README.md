@@ -27,8 +27,6 @@ cd /opt/pterodactyl-nocturne
 
 Then hard-refresh the panel (Ctrl/Cmd+Shift+R).
 
-If the repository is private, clone it with `gh repo clone hrxshxx/pterodactyl-nocturne /opt/pterodactyl-nocturne` (after `gh auth login`), or copy the folder over with `scp -r`.
-
 The installer needs **Node.js 16 or newer** (it installs `yarn` for you if it's missing). On Debian/Ubuntu you can get Node with:
 
 ```bash

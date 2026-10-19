@@ -3,5 +3,6 @@
     "background": "#161826",
     "surfaceTint": 30,
     "radius": "default",
-    "consoleScheme": "nocturne"
+    "consoleScheme": "nocturne",
+    "statsPage": true
 }

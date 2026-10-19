@@ -24,8 +24,12 @@ const TARGETS = [
     'resources/scripts/components/server/console/Console.tsx',
     'resources/views/templates/wrapper.blade.php',
     'resources/views/layouts/admin.blade.php',
+    'resources/scripts/routers/DashboardRouter.tsx',
+    'resources/scripts/components/NavigationBar.tsx',
 ];
 const PUBLIC_DIR = 'public/themes/nocturne';
+// New source files we add to the panel (removed again by --restore).
+const COMPONENT_DIR = 'resources/scripts/components/nocturne';
 
 const die = (msg) => {
     console.error(`nocturne: ${msg}`);
@@ -78,6 +82,7 @@ if (restore) {
         if (fs.existsSync(src) && isPatched(rel)) fs.copyFileSync(src, path.join(panel, rel));
     }
     fs.rmSync(path.join(panel, PUBLIC_DIR), { recursive: true, force: true });
+    fs.rmSync(path.join(panel, COMPONENT_DIR), { recursive: true, force: true });
     fs.rmSync(backupDir, { recursive: true, force: true });
     log('restored original files. Rebuild the panel frontend to finish.');
     process.exit(0);
@@ -100,6 +105,7 @@ const cfg = {
     surfaceTint: 30,
     radius: 'default',
     consoleScheme: 'nocturne',
+    statsPage: true,
     ...JSON.parse(fs.readFileSync(path.join(ROOT, 'nocturne.config.json'), 'utf8')),
 };
 const isHex = (h) => /^#[0-9a-f]{6}$/i.test(h);
@@ -344,6 +350,44 @@ if (anchor.test(admin)) {
 admin = admin.replace(/<meta name="theme-color" content="[^"]*">/, `<meta name="theme-color" content="${bg}">`);
 write(adminRel, admin);
 log('patched the admin layout');
+
+// ------------------------------------------------------ system stats page ---
+
+const routerRel = TARGETS[4];
+const navRel = TARGETS[5];
+let router = original(routerRel);
+let nav = original(navRel);
+
+if (cfg.statsPage) {
+    const routerImport = "import DashboardContainer from '@/components/dashboard/DashboardContainer';";
+    const routesAnchor = /\n(\s*)\{routes\.account\.map\(/;
+    if (!router.includes(routerImport) || !routesAnchor.test(router)) {
+        die(`could not find the dashboard routes in ${routerRel}; is this panel modified?`);
+    }
+    router = router
+        .replace(routerImport, `${routerImport}\nimport SystemStatsContainer from '@/components/nocturne/SystemStatsContainer'; // pterodactyl-nocturne`)
+        .replace(
+            routesAnchor,
+            (_, indent) =>
+                `\n${indent}<Route path={'/stats'} exact>\n${indent}    <SystemStatsContainer />\n${indent}</Route>\n${indent}{routes.account.map(`,
+        );
+
+    const searchAnchor = /\n(\s*)<SearchContainer \/>\n/;
+    if (!searchAnchor.test(nav)) die(`could not find the top bar links in ${navRel}; is this panel modified?`);
+    nav = nav
+        .replace(/^(import [^\n]*\n)/, `$1import { faChartLine } from '@fortawesome/free-solid-svg-icons'; // pterodactyl-nocturne\n`)
+        .replace(
+            searchAnchor,
+            (m, indent) =>
+                `${m}${indent}<Tooltip placement={'bottom'} content={'System stats'}>\n${indent}    <NavLink to={'/stats'}>\n${indent}        <FontAwesomeIcon icon={faChartLine} />\n${indent}    </NavLink>\n${indent}</Tooltip>\n`,
+        );
+    write(`${COMPONENT_DIR}/SystemStatsContainer.tsx`, fs.readFileSync(path.join(ROOT, 'theme/components/SystemStatsContainer.tsx'), 'utf8'));
+    log('added the System stats page (/stats)');
+} else {
+    fs.rmSync(path.join(panel, COMPONENT_DIR), { recursive: true, force: true });
+}
+write(routerRel, router);
+write(navRel, nav);
 
 flush();
 log('files written. Rebuild the frontend (install.sh does this) to see the theme.');

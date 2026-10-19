@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs the Nocturne theme on an existing Pterodactyl 1.11.x panel.
+# Installs the Nocturne theme on an existing Pterodactyl 1.11–1.15 panel.
 #
 #   sudo ./install.sh                       # panel in /var/www/pterodactyl
 #   sudo ./install.sh /path/to/panel
